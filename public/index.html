@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+  <head>
+    <meta charset="utf-8">
+    <title>Magic is Neato!</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="./css/app.css">
+
+  </head>
+  <body>
+    <div class="container" ng-controller="appCtrl">
+      <h1>Deck Editor!</h1>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Card Name</th>
+            <th>Quantity</th>
+            <th>Mana Cost</th>
+            <th>Type</th>
+            <th>Picture</th>
+            <th>ACTION!</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td> <input class="form-control" ng-model="card.cardName"></td>
+              <td> <input class="form-control" ng-model="card.quantity"></td>
+              <td> <input class="form-control" ng-model="card.manaCost"></td>
+              <td> <input class="form-control" ng-model="card.type"></td>
+              <td> <input class="form-control" ng-model="card.picture"></td>
+              <td><button class="btn btn-primary" ng-click="addCard()">Add Card</button></td>
+              <td><button class="btn btn-info" ng-click="update()">Update Card</button><br> <button class="btn btn-info" ng-click="deselect()">Clear</button></td>
+              <td>&nbsp;</td>
+
+            </tr>
+            <tr ng-repeat="card in deck">
+              <td>{{card.cardName}}</td>
+              <td>{{card.quantity}}</td>
+              <td>{{card.manaCost}}</td>
+              <td>{{card.type}}</td>
+              <td class="container">
+                <img class="deckCard" src={{card.picture}} alt="MAGIC CARD" ng-repeat="i in getNumber(number) track by $index">
+              </td>
+              <td><button class="btn btn-danger" ng-click="removeCard(card._id)">Remove</button></td>
+              <td><button class="btn btn-warning" ng-click="editCard(card._id)">Edit</button></td>
+            </tr>
+        </tbody>
+      </table>
+
+    </div>
+
+  <!-- angular CDN -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.0/angular.js"></script>
+  <!-- controller -->
+  <script  type="text/javascript" src="./controllers/deckController.js"></script>
+
+  </body>
+</html>
