@@ -46,8 +46,9 @@
               <td class="container">
                 <img class="deckCard" src={{card.picture}} alt="MAGIC CARD" ng-repeat="i in getNumber(number) track by $index">
               </td>
-              <td><button class="btn btn-danger" ng-click="removeCard(card._id)">Remove</button></td>
-              <td><button class="btn btn-warning" ng-click="editCard(card._id)">Edit</button></td>
+              <td><button class="btn btn-danger" ng-click="removeCard(card._id)">Remove</button>
+              <button class="btn btn-danger" ng-click="increaseQuantity(card._id)">+</button></td>
+              <td><button class="btn btn-warning" ng-click="editCard(card._id)">Edit</button><button class="btn btn-danger" ng-click="decreaseQuantity(card._id)">-</button></td>
             </tr>
         </tbody>
       </table>

@@ -1,0 +1,42 @@
+<!-- view cards in deck -->
+<div class="container" ng-controller="appCtrl">
+  <h1>Deck Editor!</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Card Name</th>
+        <th>Quantity</th>
+        <th>Mana Cost</th>
+        <th>Type</th>
+        <th>Picture</th>
+        <th>ACTION!</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td> <input class="form-control" ng-model="card.cardName"></td>
+          <td> <input class="form-control" ng-model="card.quantity"></td>
+          <td> <input class="form-control" ng-model="card.manaCost"></td>
+          <td> <input class="form-control" ng-model="card.type"></td>
+          <td> <input class="form-control" ng-model="card.picture"></td>
+          <td><button class="btn btn-primary" ng-click="addCard()">Add Card</button></td>
+          <td><button class="btn btn-info" ng-click="update()">Update Card</button><br> <button class="btn btn-info" ng-click="deselect()">Clear</button></td>
+          <td>&nbsp;</td>
+
+        </tr>
+        <tr ng-repeat="card in deck">
+          <td>{{card.cardName}}</td>
+          <td>{{card.quantity}}</td>
+          <td>{{card.manaCost}}</td>
+          <td>{{card.type}}</td>
+          <td class="container">
+            <img class="deckCard" src={{card.picture}} alt="MAGIC CARD" ng-repeat="i in getNumber(number) track by $index">
+          </td>
+          <td><button class="btn btn-danger" ng-click="removeCard(card._id)">Remove</button>
+          <button class="btn btn-danger" ng-click="increaseQuantity(card._id)">+</button></td>
+          <td><button class="btn btn-warning" ng-click="editCard(card._id)">Edit</button><button class="btn btn-danger" ng-click="decreaseQuantity(card._id)">-</button></td>
+        </tr>
+    </tbody>
+  </table>
+
+</div>

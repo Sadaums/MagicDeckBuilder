@@ -19,6 +19,30 @@ myApp.controller('appCtrl', ['$scope', '$http', function($scope, $http) {
 
     refresh();
 
+    $scope.increaseQuantity = function (id) {
+      $http.get('/deck/' + id)
+      .then(function(response){
+        let editCard = response.data;
+        editCard.quantity++;
+        console.log(editCard);
+        $http.put('/deck/' + editCard._id, editCard)
+        .then(refresh());
+      })
+
+    };
+
+    $scope.decreaseQuantity = function (id) {
+      $http.get('/deck/' + id)
+      .then(function(response){
+        let editCard = response.data;
+        editCard.quantity--;
+        console.log(editCard);
+        $http.put('/deck/' + editCard._id, editCard)
+        .then(refresh());
+      })
+
+    };
+
     $scope.addCard = function(){
       let cardToAdd = $scope.card
       console.log(cardToAdd);
