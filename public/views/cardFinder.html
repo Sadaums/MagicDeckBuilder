@@ -18,21 +18,21 @@
           <button ng-click="showColor = !showColor">Color <span class="caret"></span></button>
           <br>
           <label class="checkbox-inline" ng-repeat="color in colors" ng-show="showColor">
-            <input type="checkbox" ng-model="card.color">{{color}}
+            <input type="checkbox" id={{color}} ng-model="card.color" value={color}} disabled>{{color}}
           </label>
         </li>
 
         <li><button ng-click="showManaCost = !showManaCost">Converted Mana Cost <span class="caret"></span></button>
           <br>
           <label class="checkbox-inline" ng-show="showManaCost" ng-repeat="cost in manaCost">
-            <input type="checkbox" ng-model="card.cost">{{cost}}
+            <input type="checkbox" id={{cost}} ng-model="card.cost" value={{cost}} disabled>{{cost}}
           </label>
         </li>
 
         <li><button ng-click="showType = !showType">Type <span class="caret"></span></button>
           <br>
           <label class="checkbox-inline" ng-repeat="type in types" ng-show="showType">
-            <input type="checkbox" ng-model="card.type">{{type}}
+            <input type="checkbox" id={{type}} ng-model="card.type" value={{type}} disabled>{{type}}
           </label>
         </li>
 
@@ -44,12 +44,12 @@
         <li><button ng-click="showSet = !showSet">Set <span class="caret"></span></button>
           <br>
           <label class="checkbox-inline" ng-repeat="set in standard" ng-model="card.set" ng-show="showSet">
-            <input type="checkbox">{{set}}
+            <input type="checkbox" id={{set}} value={{set}} disabled>{{set}}
         </li>
 
       </ul>
 
-      <button ng-click="getCards()">Find Cards</button>
+      <button ng-click="getCards(card)">Find Cards</button>
 
     </form>
 

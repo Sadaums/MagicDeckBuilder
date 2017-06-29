@@ -32,7 +32,7 @@ myApp.config(['$routeProvider', function($routeProvider){
 
 }])
 
-myApp.controller('cardSelectController',['$scope', function($scope){
+myApp.controller('cardSelectController',['$scope', '$http', function($scope, $http){
 
   const standard = ['Amonkhet', 'Aether Revolt', 'Kaladesh', 'Eldritch Moon', 'Shadows over Innistrad', 'Oath of the Gatewatch', 'Battle For Zendikar'];
   $scope.standard = standard;
@@ -45,9 +45,44 @@ myApp.controller('cardSelectController',['$scope', function($scope){
 
 
 
-  $scope.getCards = function(name, color, cost, type, subType, set){
-    let cardToAdd = $scope.card
-    console.log(cardToAdd);
+  $scope.getCards = function(card){
+    let requestCard = {
+      'name': "",
+      'color': "",
+      'cmc': "",
+      'type': "",
+      'subType': "",
+      'set': ""
+    };
+    if (card.name) {
+      requestCard.name = card.name
+    };
+    if (card.color) {
+      requestCard.color = card.color
+    };
+    if (card.cost) {
+      requestCard.cmc = card.cost
+    };
+    if (card.type) {
+      requestCard.type = card.type
+    };
+    if (card.subType) {
+      requestCard.subType = card.subType
+    };
+    if (card.set) {
+      requestCard.set = card.set
+    };
+    console.log(card);
+    console.log(requestCard);
+    // this is broken. can only search by name, which is fine, but need to be able to search by color, cost, type, subtype, set. Need to fix the object
+    $http({
+      method: 'GET',
+      url: ('https://api.magicthegathering.io/v1/cards?name=' + card.name + '&subtypes=')
+    })
+    .then(function(response){
+      console.log(response.data);
+    })
+
   }
 
 
