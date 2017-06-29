@@ -1,5 +1,37 @@
-var myApp = angular.module('myApp', []);
-myApp.controller('appCtrl', ['$scope', '$http', function($scope, $http) {
+var myApp = angular.module('myApp', ['ngRoute']);
+
+myApp.config(['$routeProvider', function($routeProvider){
+
+  $routeProvider
+  .when('/decks', {
+    templateUrl: 'views/deck.html',
+    controller: 'deckController'
+  })
+  .when('/finder', {
+    templateUrl: 'views/cardFinder.html'
+  })
+  .when('/select', {
+    templateUrl: 'views/cardSelect.html'
+  })
+  .when('/viewer', {
+    templateUrl: 'views/cardViewer.html'
+  })
+  .when('/list', {
+    templateUrl: 'views/deckList.html'
+  })
+  .when('/login', {
+    templateUrl: 'views/login.html'
+  })
+  .when('/newdeck', {
+    templateUrl: 'views/newDeck.html'
+  })
+  .otherwise({
+    redirectTo: '/decks'
+  })
+
+}])
+
+myApp.controller('deckController', ['$scope', '$http', function($scope, $http) {
 
     var refresh = function (){
       $http.get('/deck').then(function(response) {
@@ -14,8 +46,6 @@ myApp.controller('appCtrl', ['$scope', '$http', function($scope, $http) {
         };
 
     })}
-
-
 
     refresh();
 
