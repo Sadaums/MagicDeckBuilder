@@ -8,7 +8,8 @@ myApp.config(['$routeProvider', function($routeProvider){
     controller: 'deckController'
   })
   .when('/finder', {
-    templateUrl: 'views/cardFinder.html'
+    templateUrl: 'views/cardFinder.html',
+    controller: 'cardSelectController'
   })
   .when('/select', {
     templateUrl: 'views/cardSelect.html'
@@ -28,6 +29,27 @@ myApp.config(['$routeProvider', function($routeProvider){
   .otherwise({
     redirectTo: '/decks'
   })
+
+}])
+
+myApp.controller('cardSelectController',['$scope', function($scope){
+
+  const standard = ['Amonkhet', 'Aether Revolt', 'Kaladesh', 'Eldritch Moon', 'Shadows over Innistrad', 'Oath of the Gatewatch', 'Battle For Zendikar'];
+  $scope.standard = standard;
+  const colors = ['Red', 'Green', 'Black', 'White', 'Blue'];
+  $scope.colors = colors;
+  const types = ['Instant', 'Sorcery', 'Artifact', 'Creature', 'Enchantment', 'Land', 'Planeswalker']
+  $scope.types = types;
+  const manaCost = ['0','1','2','3','4','5','6','7','8','9','10','11','12'];
+  $scope.manaCost = manaCost;
+
+
+
+  $scope.getCards = function(name, color, cost, type, subType, set){
+    let cardToAdd = $scope.card
+    console.log(cardToAdd);
+  }
+
 
 }])
 
