@@ -3,7 +3,7 @@ var myApp = angular.module('myApp', ['ngRoute']);
 myApp.config(['$routeProvider', function($routeProvider){
 
   $routeProvider
-  .when('/decks', {
+  .when('/deck', {
     templateUrl: 'views/deck.html',
     controller: 'deckController'
   })
@@ -12,7 +12,8 @@ myApp.config(['$routeProvider', function($routeProvider){
     controller: 'cardSelectController'
   })
   .when('/select', {
-    templateUrl: 'views/cardSelect.html'
+    templateUrl: 'views/cardSelect.html',
+    controller: 'cardSelectController'
   })
   .when('/viewer', {
     templateUrl: 'views/cardViewer.html'
@@ -27,12 +28,12 @@ myApp.config(['$routeProvider', function($routeProvider){
     templateUrl: 'views/newDeck.html'
   })
   .otherwise({
-    redirectTo: '/decks'
+    redirectTo: '/deck'
   })
 
 }])
 
-myApp.controller('cardSelectController',['$scope', '$http', function($scope, $http){
+myApp.controller('cardSelectController',['$scope', '$http', '$location', function($scope, $http, $location){
 
   const standard = ['Amonkhet', 'Aether Revolt', 'Kaladesh', 'Eldritch Moon', 'Shadows over Innistrad', 'Oath of the Gatewatch', 'Battle For Zendikar'];
   $scope.standard = standard;
@@ -44,15 +45,14 @@ myApp.controller('cardSelectController',['$scope', '$http', function($scope, $ht
   $scope.manaCost = manaCost;
 
 
-
   $scope.getCards = function(card){
     let requestCard = {
-      'name': "",
-      'color': "",
-      'cmc': "",
-      'type': "",
-      'subType': "",
-      'set': ""
+      'name': null,
+      'color': null,
+      'cmc': null,
+      'type': null,
+      'subType': null,
+      'set': null
     };
     if (card.name) {
       requestCard.name = card.name
@@ -72,36 +72,44 @@ myApp.controller('cardSelectController',['$scope', '$http', function($scope, $ht
     if (card.set) {
       requestCard.set = card.set
     };
-    console.log(card);
-    console.log(requestCard);
     // this is broken. can only search by name, which is fine, but need to be able to search by color, cost, type, subtype, set. Need to fix the object
     $http({
       method: 'GET',
-      url: ('https://api.magicthegathering.io/v1/cards?name=' + card.name + '&subtypes=')
+      url: ('https://api.magicthegathering.io/v1/cards?name=' + requestCard.name + '&subtypes=')
     })
     .then(function(response){
-      console.log(response.data);
-    })
+      cards = response.data.cards;
+      for (var i = 0; i < cards.length; i++) {
+        if (!cards[i].imageUrl) {
+          cards[i].imageUrl = '../images/MTG-BackOfCard.jpg';
+        }
+      }
+      console.log(cards);
+      $scope.cards = cards;
+    });
 
-  }
+  };
+
+  $scope.addToDeck= function (card) {
+    console.log(card);
+    $http.post('/deck',card)
+    .then(function(response){
+      console.log(response)
+    })
+    .then(
+      $location.path('/deck')
+    )
+  };
 
 
 }])
 
-myApp.controller('deckController', ['$scope', '$http', function($scope, $http) {
+myApp.controller('deckController', ['$scope', '$http', '$location', function($scope, $http, $location) {
 
     var refresh = function (){
       $http.get('/deck').then(function(response) {
-        console.log("I got the data i wanted");
         $scope.deck = response.data;
-        $scope.card = null;
-        for (var i = 0; i < response.data.length; i++) {
-          $scope.number = parseInt(response.data[i].quantity);
-          $scope.getNumber = function(num) {
-              return new Array(num);
-          }
-        };
-
+        // $scope.card = null;
     })}
 
     refresh();
@@ -110,10 +118,15 @@ myApp.controller('deckController', ['$scope', '$http', function($scope, $http) {
       $http.get('/deck/' + id)
       .then(function(response){
         let editCard = response.data;
-        editCard.quantity++;
+        if (!editCard.quantity) {
+          editCard.quantity = ['card', 'card']
+        }
+        else if(editCard.quantity.length < 4){
+          editCard.quantity.push('card');
+        }
         console.log(editCard);
         $http.put('/deck/' + editCard._id, editCard)
-        .then(refresh());
+        .then($location.path('/deck'));
       })
 
     };
@@ -122,22 +135,30 @@ myApp.controller('deckController', ['$scope', '$http', function($scope, $http) {
       $http.get('/deck/' + id)
       .then(function(response){
         let editCard = response.data;
-        editCard.quantity--;
-        console.log(editCard);
-        $http.put('/deck/' + editCard._id, editCard)
-        .then(refresh());
+        if (!editCard.quantity | editCard.quantity.length <= 1) {
+          console.log(editCard);
+          $http.delete('/deck/' + id)
+          .then(refresh());
+        }
+        else {
+          editCard.quantity.pop();
+          console.log(editCard);
+          $http.put('/deck/' + editCard._id, editCard)
+          .then(refresh());
+        }
+
       })
 
     };
-
-    $scope.addCard = function(){
-      let cardToAdd = $scope.card
-      console.log(cardToAdd);
-      $http.post('/deck',cardToAdd).then(function(response){
-        console.log(response);
-        refresh();
-      })
-    }
+    //
+    // $scope.addCard = function(){
+    //   let cardToAdd = $scope.card
+    //   console.log(cardToAdd);
+    //   $http.post('/deck',cardToAdd).then(function(response){
+    //     console.log(response);
+    //     refresh();
+    //   })
+    // }
     $scope.removeCard = function(id) {
       console.log(id);
       $http.delete('/deck/' + id)
@@ -160,5 +181,9 @@ myApp.controller('deckController', ['$scope', '$http', function($scope, $http) {
 
     $scope.deselect = function() {
       $scope.card = null;
+    }
+
+    $scope.goToFinder = function(){
+      $location.path('/finder')
     }
 }]);

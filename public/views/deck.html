@@ -1,19 +1,19 @@
 <!-- view cards in deck -->
 <div class="container">
-  <h1>Deck Editor!</h1>
-  <table class="table">
+  <h1>Deck View</h1>
+  <button class="row center-block" ng-click="goToFinder()">Add new card</button>
+
+  <table class="table table-hover">
     <thead>
       <tr>
-        <th>Card Name</th>
-        <th>Quantity</th>
+        <th>Picture</th>
         <th>Mana Cost</th>
         <th>Type</th>
-        <th>Picture</th>
         <th>ACTION!</th>
       </tr>
     </thead>
     <tbody>
-        <tr>
+        <!-- <tr>
           <td> <input class="form-control" ng-model="card.cardName"></td>
           <td> <input class="form-control" ng-model="card.quantity"></td>
           <td> <input class="form-control" ng-model="card.manaCost"></td>
@@ -22,19 +22,19 @@
           <td><button class="btn btn-primary" ng-click="addCard()">Add Card</button></td>
           <td><button class="btn btn-info" ng-click="update()">Update Card</button><br> <button class="btn btn-info" ng-click="deselect()">Clear</button></td>
           <td>&nbsp;</td>
+        </tr> -->
 
-        </tr>
-        <tr ng-repeat="card in deck">
-          <td>{{card.cardName}}</td>
-          <td>{{card.quantity}}</td>
+        <tr ng-repeat="card in deck | orderBy: 'cmc'">
+          <td><img class="deckCard" ng-src='{{card.imageUrl}}' alt="MAGIC CARD"></td>
           <td>{{card.manaCost}}</td>
           <td>{{card.type}}</td>
-          <td class="container">
-            <img class="deckCard" src={{card.picture}} alt="MAGIC CARD" ng-repeat="i in getNumber(number) track by $index">
+          <td>
+            <button class="btn btn-danger" ng-click="removeCard(card._id)">Remove</button>
+            <button class="btn btn-warning" ng-click="editCard(card._id)" disabled>Edit</button>
+            <br>
+            <button class="btn btn-danger" ng-click="increaseQuantity(card._id)">+</button>
+            <button class="btn btn-danger" ng-click="decreaseQuantity(card._id)">-</button>
           </td>
-          <td><button class="btn btn-danger" ng-click="removeCard(card._id)">Remove</button>
-          <button class="btn btn-danger" ng-click="increaseQuantity(card._id)">+</button></td>
-          <td><button class="btn btn-warning" ng-click="editCard(card._id)">Edit</button><button class="btn btn-danger" ng-click="decreaseQuantity(card._id)">-</button></td>
         </tr>
     </tbody>
   </table>

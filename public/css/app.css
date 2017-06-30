@@ -1,4 +1,6 @@
 .deckCard{
-  max-width: 5em;
-  margin-right: -2em;
+  max-width: 7em;
+}
+.cardSelectCard{
+  max-width: 13em;
 }

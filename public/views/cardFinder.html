@@ -1,59 +1,84 @@
 <!-- find cards on criteria -->
-<nav>
-  <a href="#" class="pull-left">Decklist</a>
-  <a href="#" class="pull-right">Card Select</a>
-</nav>
-<main class="container">
-  <h1 class="center">Card Finder</h1>
+<h1 class="center">Card Finder</h1>
+<div ng-hide="showForm">
+
+    <div class="container">
+
+      <form name='cardForm' class="">
+        <ul>
+          <li><button ng-click="showName = !showName">Name <span class="caret"></span></button>
+            <br>
+            <input placeholder="ex. Black Lotus, Shock, Negate, Dark Confidant, etc." ng-model="card.name" ng-show="showName">
+          </li>
+
+          <li><button ng-click="showColor = !showColor" disabled>Color <span class="caret"></span></button>
+            <br>
+            <label class="checkbox-inline" ng-repeat="color in colors" ng-show="showColor">
+              <input type="checkbox" id={{color}} ng-model="card.color" value={color}} disabled>{{color}}
+            </label>
+          </li>
+
+          <li><button ng-click="showManaCost = !showManaCost" disabled>Converted Mana Cost <span class="caret"></span></button>
+            <br>
+            <label class="checkbox-inline" ng-show="showManaCost" ng-repeat="cost in manaCost">
+              <input type="checkbox" id={{cost}} ng-model="card.cost" value={{cost}} disabled>{{cost}}
+            </label>
+          </li>
+
+          <li><button ng-click="showType = !showType" disabled>Type <span class="caret"></span></button>
+            <br>
+            <label class="checkbox-inline" ng-repeat="type in types" ng-show="showType">
+              <input type="checkbox" id={{type}} ng-model="card.type" value={{type}} disabled>{{type}}
+            </label>
+          </li>
+
+          <li><button ng-click="showSubtype = !showSubtype" disabled>Subtype <span class="caret"></span></button>
+            <br>
+            <input placeholder="ex. Equipment, Aura, Angel, etc." ng-model="card.subType" ng-show="showSubtype">
+          </li>
+
+          <li><button ng-click="showSet = !showSet" disabled>Set <span class="caret"></span></button>
+            <br>
+            <label class="checkbox-inline" ng-repeat="set in standard" ng-model="card.set" ng-show="showSet">
+              <input type="checkbox" id={{set}} value={{set}} disabled>{{set}}
+          </li>
+
+        </ul>
+
+        <button ng-click="getCards(card); showForm = !showForm">Find Cards</button>
+
+      </form>
+
+    </div>
+
+</div>
+
+<div ng-show='showForm'>
+
   <div class="container">
 
-    <form name='cardForm' class="">
-      <ul>
-        <li><button ng-click="showName = !showName">Name <span class="caret"></span></button>
-          <br>
-          <input placeholder="ex. Black Lotus, Shock, Negate, Dark Confidant, etc." ng-model="card.name" ng-show="showName">
-        </li>
+    <button class="row center-block" ng-click="showForm = !showForm">Back to Card Select</button>
+    <table class="table table-hover">
+      <tr>
+        <th>Picture</th>
+        <th>Rulings</th>
+        <th>&nbsp;</th>
+      </tr>
 
-        <li>
-          <button ng-click="showColor = !showColor">Color <span class="caret"></span></button>
-          <br>
-          <label class="checkbox-inline" ng-repeat="color in colors" ng-show="showColor">
-            <input type="checkbox" id={{color}} ng-model="card.color" value={color}} disabled>{{color}}
-          </label>
-        </li>
+      <tr ng-repeat="card in cards">
+        <td><img class='cardSelectCard img-responsive' ng-src='{{card.imageUrl}}' alt="magicCard"/></td>
+        <td>
+          <ul>
+            <li ng-repeat="ruling in card.rulings">{{ruling.text}}</li>
+          </ul>
+        </td>
+        <td>
+          <button ng-click="addToDeck(card)">Add to Deck!</button>
+        </td>
+      </tr>
 
-        <li><button ng-click="showManaCost = !showManaCost">Converted Mana Cost <span class="caret"></span></button>
-          <br>
-          <label class="checkbox-inline" ng-show="showManaCost" ng-repeat="cost in manaCost">
-            <input type="checkbox" id={{cost}} ng-model="card.cost" value={{cost}} disabled>{{cost}}
-          </label>
-        </li>
-
-        <li><button ng-click="showType = !showType">Type <span class="caret"></span></button>
-          <br>
-          <label class="checkbox-inline" ng-repeat="type in types" ng-show="showType">
-            <input type="checkbox" id={{type}} ng-model="card.type" value={{type}} disabled>{{type}}
-          </label>
-        </li>
-
-        <li><button ng-click="showSubtype = !showSubtype">Subtype <span class="caret"></span></button>
-          <br>
-          <input placeholder="ex. Equipment, Aura, Angel, etc." ng-model="card.subType" ng-show="showSubtype">
-        </li>
-
-        <li><button ng-click="showSet = !showSet">Set <span class="caret"></span></button>
-          <br>
-          <label class="checkbox-inline" ng-repeat="set in standard" ng-model="card.set" ng-show="showSet">
-            <input type="checkbox" id={{set}} value={{set}} disabled>{{set}}
-        </li>
-
-      </ul>
-
-      <button ng-click="getCards(card)">Find Cards</button>
-
-    </form>
+    </table>
 
   </div>
 
-
-</main>
+</div>
