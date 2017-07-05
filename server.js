@@ -39,20 +39,22 @@ app.get('/deck/:id', function (req, res){
 // app.put('/deck/:id', function(req, res){
 //   let id = req.params.id;
 //   console.log(req.body.decks);
-//   db.deck.update({_id: mongojs.ObjectId(id)}, req.body, {}, function (err, doc) {
-//        res.json.doc;
+//   db.deck.findAndModify({id: {_id: mongojs.ObjectId(id)},
+//     update: {$set: {decks: req.body[0].decks}},
+//      new: true}, function (err, doc) {
+//        res.json(doc);
 //      })
 // });
 
-app.put('/deck/:id', function(req, res){
-  let id = req.params.id;
-  console.log(req.body);
-  db.deck.findAndModify({id: {_id: mongojs.ObjectId(id)},
-    update: {$set: {quantity: req.body.quantity, mechanics: req.body.mechanics}},
-     new: true}, function (err, doc) {
-       res.json.doc;
-     })
-});
+// app.put('/deck/:id', function(req, res){
+//   let id = req.params.id;
+//   console.log(req.body);
+//   db.deck.findAndModify({id: {_id: mongojs.ObjectId(id)},
+//     update: {$set: {quantity: req.body.quantity, mechanics: req.body.mechanics}},
+//      new: true}, function (err, doc) {
+//        res.json(doc);
+//      })
+// });
 
 app.listen(3000);
 console.log("Server running on port 3000");

@@ -52,6 +52,7 @@ myApp.controller('deckLoginController',['$scope', '$http', '$location', function
   }
 
 
+
 }])
 
 myApp.controller('deckListController',['$scope', '$http', '$location', function($scope, $http, $location){
@@ -74,13 +75,15 @@ myApp.controller('deckListController',['$scope', '$http', '$location', function(
     .then(function(response){
       let res = response.data;
       res[0].decks.push(blankDeck);
-      console.log(res[0]._id);
-      $http.put('/deck/' + res[0]._id, res);
+      console.log(res);
+      $http.put('/deck/' + res._id, res);
     })
     // console.log(newDeck);
   }
 
 }])
+// $http.put('/deck/' + editCard._id, editCard)
+// .then(refresh());
 
 
 
