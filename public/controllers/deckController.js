@@ -166,7 +166,7 @@ myApp.controller('cardSelectController',['$scope', '$http', '$location', functio
 
   $scope.addToDeck= function (card) {
     console.log(card);
-    $http.post('/deck',card)
+    $http.post('/deck', card)
     .then(function(response){
       console.log(response)
     })
