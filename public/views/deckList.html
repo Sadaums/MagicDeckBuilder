@@ -1,2 +1,31 @@
 <!-- view decks -->
-<h1>this is a page where you can view all your decks</h1>
+<h1>Deck List</h1>
+<div class="container">
+  <button class='btn btn-info pull-left' ng-click="showNewDeckForm = !showNewDeckForm">New Deck</button>
+
+  <form ng-show="showNewDeckForm" class="pull-right">
+    <input placeholder="Name this deck!" autofocus ng-model="newDeck.name">
+    <button class="btn btn-danger" ng-click="addDeck(newDeck)">Add Deck</button>
+  </form>
+</div>
+
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Deck Name</th>
+      <th>Colors</th>
+      <th>Mechanics</th>
+      <th>&nbsp;</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="decks in decks">
+      <td>{{deck.name}}</td>
+      <td>{{deck.name}}</td>
+      <td>{{deck.name}}</td>
+      <td><button class="btn btn-danger">GO!</button></td>
+    </tr>
+  </tbody>
+
+</table>

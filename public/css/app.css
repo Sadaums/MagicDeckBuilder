@@ -4,3 +4,9 @@
 .cardSelectCard{
   max-width: 13em;
 }
+/*.modal-body{
+  max-width: 233px;
+}*/
+.modal-content{
+  max-width: 90em;
+}

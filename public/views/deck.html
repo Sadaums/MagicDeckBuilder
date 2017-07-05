@@ -1,14 +1,20 @@
 <!-- view cards in deck -->
 <div class="container">
   <h1>Deck View</h1>
-  <button class="row center-block" ng-click="goToFinder()">Add new card</button>
+  <button class="row center-block btn btn-info" ng-click="goToFinder()">Add new card</button>
+  <!-- <button class="row center-block btn btn-info" ng-click="showMechanicForm = !showMechanicForm">Add new Mechanic to Deck!</button>
+  <form class="" action="index.html" ng-show="showMechanicForm">
+    <label for="">mechanic name</label><input type="text" name="" value="">
+    <label for="">mechanic description</label><input type="text" name="" value="">
+
+  </form> -->
 
   <table class="table table-hover">
     <thead>
       <tr>
         <th>Picture</th>
-        <th>Mana Cost</th>
-        <th>Type</th>
+        <th>Quantity</th>
+        <th>STUFF</th>
         <th>ACTION!</th>
       </tr>
     </thead>
@@ -25,15 +31,54 @@
         </tr> -->
 
         <tr ng-repeat="card in deck | orderBy: 'cmc'">
-          <td><img class="deckCard" ng-src='{{card.imageUrl}}' alt="MAGIC CARD"></td>
-          <td>{{card.manaCost}}</td>
-          <td>{{card.type}}</td>
+          <td>
+              <img class="deckCard" ng-src='{{card.imageUrl}}' alt="MAGIC CARD" data-toggle="modal" data-target="#{{card.id}}">
+
+            <!-- Modal -->
+            <div class="modal fade" id="{{card.id}}" tabindex="-1" role="dialog" aria-labelledby="{{card.id}}">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="{{card.id}}"><b>{{card.name}}</b></h3>
+                    <h4>x {{card.quantity}}</h4>
+                  </div>
+                  <div class="modal-body">
+
+                    <table>
+                      <td>
+                        <img ng-src="{{card.imageUrl}}" alt="">
+                      </td>
+                      <td>
+
+                        <ul>
+                          <h4><u>Rulings</u></h4>
+                          <li ng-repeat="ruling in card.rulings">{{ruling.text}}</li>
+                        </ul>
+                      </td>
+
+                    </table>
+
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </td>
+          <td>
+            <h3><b>x {{card.quantity}}</b></h3>
+            <button class="btn btn-danger" ng-click="increaseQuantity(card._id)">+</button>
+            <button class="btn btn-danger" ng-click="decreaseQuantity(card._id)">-</button></td>
+          <td data-toggle="modal" data-target="#{{card.id}}">{{card.manaCost}} {{card.type}}<hr></td>
+          <!-- <td data-toggle="modal" data-target="#{{card.id}}"></td> -->
           <td>
             <button class="btn btn-danger" ng-click="removeCard(card._id)">Remove</button>
-            <button class="btn btn-warning" ng-click="editCard(card._id)" disabled>Edit</button>
+            <button class="btn btn-warning" data-toggle="modal" data-target="#{{card.id}}">Edit</button>
             <br>
-            <button class="btn btn-danger" ng-click="increaseQuantity(card._id)">+</button>
-            <button class="btn btn-danger" ng-click="decreaseQuantity(card._id)">-</button>
+
           </td>
         </tr>
     </tbody>

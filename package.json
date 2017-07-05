@@ -1,0 +1,28 @@
+{
+  "name": "magicdeckbuilder",
+  "version": "1.0.0",
+  "description": "Build a Magic Deck",
+  "main": "server.js",
+  "dependencies": {
+    "angular": "^1.6.0",
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "mongojs": "^2.4.0",
+    "nodemon": "^1.11.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sadaums/MagicDeckBuilder.git"
+  },
+  "author": "Kevin Danger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sadaums/MagicDeckBuilder/issues"
+  },
+  "homepage": "https://github.com/Sadaums/MagicDeckBuilder#readme"
+}
