@@ -188,8 +188,20 @@ myApp.controller('deckController', ['$scope', '$http', '$location', function($sc
     var refresh = function (){
       $http.get('/deck').then(function(response) {
 
-        let deckBack = response.data;
-        console.log(deckBack);
+        let deckBackAll = response.data;
+        // console.log(deckBackAll);
+        let deckBackCards = [];
+        let deckBackMechanics = [];
+        for (var i = 0; i < deckBackAll.length; i++) {
+          if (deckBackAll[i].colorIdentity) {
+            deckBackCards.push(deckBackAll[i])
+          }
+          else {
+            deckBackMechanics.push(deckBackAll[i])
+          }
+        }
+
+
 
         // for (var i = 0; i < deckBack.length; i++) {
         //   if (deckBack[i].manaCost.includes('{B}')) {
@@ -210,44 +222,84 @@ myApp.controller('deckController', ['$scope', '$http', '$location', function($sc
         //   }
         // }
 
-        $scope.deck = deckBack;
+        // populate mechanics.cards array with name, quantity, and total
+        for (var i = 0; i < deckBackMechanics.length; i++) {
+          for (var j = 0; j < deckBackCards.length; j++) {
+            if (deckBackCards[j].mechanics.includes(deckBackMechanics[i].name) ) {
+              deckBackMechanics[i].cards.push({name: deckBackCards[j].name, quantity: deckBackCards[j].quantity})
+            }
+          }
+          for (var k = 0; k < deckBackMechanics[i].cards.length; k++) {
+            deckBackMechanics[i].total += deckBackMechanics[i].cards[k].quantity
+          }
+        };
+
+        // console.log(deckBackMechanics);
+        $scope.mechanics = deckBackMechanics;
+        $scope.deck = deckBackCards;
     })};
 
     refresh();
 
-    $scope.increaseQuantity = function (id) {
-      $http.get('/deck/' + id)
-      .then(function(response){
-        let editCard = response.data;
-        if (editCard.quantity < 4) {
-          editCard.quantity++;
-        }
-
+    $scope.addMechanicToCard = function (card, mechanic){
+      let editCard = card;
+      if (!editCard.mechanics.includes(mechanic.name)) {
+        editCard.mechanics.push(mechanic.name);
         $http.put('/deck/' + editCard._id, editCard)
-        .then(refresh());
-      })
+      }
+    }
 
+    $scope.removeMechanicFromCard = function (card, dude){
+      let editCard = card;
+
+      function mechanicIseek(element) {
+        return element === dude;
+      }
+
+      let spliceStart = (editCard.mechanics.findIndex(mechanicIseek));
+      editCard.mechanics.splice(spliceStart, 1);
+      $http.put('/deck/' + editCard._id, editCard)
+    }
+
+    $scope.addMechanic = function (mechanic){
+      console.log(mechanic.name);
+      let mechanicName = {'name': mechanic.name, 'cards': [], total: 0};
+      $scope.mechanic.name = '';
+      console.log(mechanicName);
+      $http.post('/deck', mechanicName)
+      .then(function(response){
+        console.log(response)
+      }).then(
+        refresh()
+      );
+    }
+
+    $scope.increaseQuantity = function (card) {
+
+      let editCard = card;
+      if (editCard.quantity < 4 || editCard.type.includes('Basic Land') ) {
+        editCard.quantity++;
+      }
+      $http.put('/deck/' + editCard._id, editCard)
+      console.log(editCard);
+      refresh()
     };
 
-    $scope.decreaseQuantity = function (id) {
-      $http.get('/deck/' + id)
-      .then(function(response){
-        let editCard = response.data;
+    $scope.decreaseQuantity = function (card) {
+
+        let editCard = card;
         if (editCard.quantity <= 1) {
           console.log(editCard);
-          $http.delete('/deck/' + id)
-          .then(refresh());
+          $http.delete('/deck/' + editCard.id)
         }
         else {
           editCard.quantity--;
           console.log(editCard);
           $http.put('/deck/' + editCard._id, editCard)
-          .then(refresh());
         }
-
-      })
-
+        refresh()
     };
+
     //
     // $scope.addCard = function(){
     //   let cardToAdd = $scope.card

@@ -1,34 +1,55 @@
 <!-- view cards in deck -->
-<div class="container">
-  <h1>Deck View</h1>
-  <button class="row center-block btn btn-info" ng-click="goToFinder()">Add new card</button>
-  <!-- <button class="row center-block btn btn-info" ng-click="showMechanicForm = !showMechanicForm">Add new Mechanic to Deck!</button>
-  <form class="" action="index.html" ng-show="showMechanicForm">
-    <label for="">mechanic name</label><input type="text" name="" value="">
-    <label for="">mechanic description</label><input type="text" name="" value="">
 
-  </form> -->
+<h1 class="pageTitle">Deck View</h1>
+  <div class="container">
+  <div class="container">
+    <div class="row">
+      <button class="row center-block btn btn-info pull-left" ng-click="goToFinder()"><small><span class="glyphicon glyphicon-chevron-left"></small> Add New Card</button>
+      <button class="row center-block btn btn-danger pull-right" ng-click="showMechanicTable = !showMechanicTable">Mechanics Manager <small><span class="glyphicon glyphicon-chevron-down"></small></button>
+    </div>
 
-  <table class="table table-hover">
+    <div ng-show="showMechanicTable" class="row">
+      <table class="table">
+        <thead>
+          <tr>
+            <tH>Mechanic</th>
+            <th class="text-center">Cards</th>
+            <th class="text-center">Total Cards with Mechanic</th>
+            <th>&nbsp;</th>
+          </tr>
+        </thead>
+        <tr ng-repeat="mechanic in mechanics">
+          <td class="pull-middle">{{mechanic.name}}</td>
+          <td>
+            <ul>
+              <li ng-repeat="card in mechanic.cards">{{card.name}}</li>
+            </ul>
+          </td>
+          <td class="text-center">{{mechanic.total}}</td>
+          <td><button class="btn btn-danger pull-right" ng-click="removeCard(mechanic._id)"><small><span class="glyphicon glyphicon-remove"></small> Remove</button></td>
+        </tr>
+        <tr>
+          <td>
+            <input class="form-control" ng-model="mechanic.name" placeholder="New Mechanic Name" autofocus>
+          </td>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td><button class="btn btn-success pull-right" ng-click="addMechanic(mechanic)"><small><span class="glyphicon glyphicon-plus"></small> Add Mechanic</button></td>
+
+        </tr>
+      </table>
+
+    </div>
+  </div>
+  <br>
+
+  <table class="table table-hover table-condensed">
     <thead>
       <tr>
-        <th>Picture</th>
-        <th>Quantity</th>
-        <th>STUFF</th>
-        <th>ACTION!</th>
+
       </tr>
     </thead>
     <tbody>
-        <!-- <tr>
-          <td> <input class="form-control" ng-model="card.cardName"></td>
-          <td> <input class="form-control" ng-model="card.quantity"></td>
-          <td> <input class="form-control" ng-model="card.manaCost"></td>
-          <td> <input class="form-control" ng-model="card.type"></td>
-          <td> <input class="form-control" ng-model="card.picture"></td>
-          <td><button class="btn btn-primary" ng-click="addCard()">Add Card</button></td>
-          <td><button class="btn btn-info" ng-click="update()">Update Card</button><br> <button class="btn btn-info" ng-click="deselect()">Clear</button></td>
-          <td>&nbsp;</td>
-        </tr> -->
 
         <tr ng-repeat="card in deck | orderBy: 'cmc'">
           <td>
@@ -40,8 +61,8 @@
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h3 class="modal-title" id="{{card.id}}"><b>{{card.name}}</b></h3>
-                    <h4>x {{card.quantity}}</h4>
+                    <h3 class="modal-title" id="{{card.id}} text-center"><b>{{card.name}}</b> x {{card.quantity}}</h3>
+
                   </div>
                   <div class="modal-body">
 
@@ -61,7 +82,24 @@
 
                   </div>
                   <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <table class="pull-left">
+                      <th><u>Add Mechanic to Card</u></th>
+                      <tr ng-repeat="mechanic in mechanics">
+                        <td>
+                          <button class="btn btn-default center-block" ng-click="addMechanicToCard(card, mechanic)">
+                          <small><span class="glyphicon glyphicon-plus"></small> {{mechanic.name}}
+                          </button>
+                        </td>
+                      </tr>
+                    </table>
+                    <table class="pull-right">
+                      <th><u>Remove Mechanic from Card</u></th>
+                      <tr ng-repeat="dude in card.mechanics">
+                        <td><button class="btn btn-default  center-block" ng-click="removeMechanicFromCard(card, dude)"><small><span class="glyphicon glyphicon-remove"></small> {{dude}}</button></td>
+                      </tr>
+                    </table>
+
+
                   </div>
                 </div>
               </div>
@@ -69,15 +107,20 @@
 
           </td>
           <td>
-            <h3><b>x {{card.quantity}}</b></h3>
-            <button class="btn btn-danger" ng-click="increaseQuantity(card._id)">+</button>
-            <button class="btn btn-danger" ng-click="decreaseQuantity(card._id)">-</button></td>
-          <td data-toggle="modal" data-target="#{{card.id}}">{{card.manaCost}} {{card.type}}<hr></td>
+            <h3 class="<center-block></center-block>"><b>x {{card.quantity}}</b></h3>
+            <button class="btn btn-danger" ng-click="increaseQuantity(card)"><small><span class="glyphicon glyphicon-plus"></small></button>
+            <button class="btn btn-danger" ng-click="decreaseQuantity(card)"><small><span class="glyphicon glyphicon-minus"></small></button></td>
+          <td class='text-center'>
+            {{card.manaCost}} {{card.type}}
+            <hr>
+            <button class="btn center-block btn-default" ng-repeat="mechanic in card.mechanics" ng-click="removeMechanicFromCard(card, mechanic)">
+              <small><span class="glyphicon glyphicon-remove"></small> {{mechanic}}
+            </button>
+          </td>
           <!-- <td data-toggle="modal" data-target="#{{card.id}}"></td> -->
-          <td>
-            <button class="btn btn-danger" ng-click="removeCard(card._id)">Remove</button>
-            <button class="btn btn-warning" data-toggle="modal" data-target="#{{card.id}}">Edit</button>
-            <br>
+          <td class="pull-right">
+            <button class="btn btn-warning" data-toggle="modal" data-target="#{{card.id}}"><small><span class="glyphicon glyphicon-pencil"></small> Edit</button>
+            <button class="btn btn-danger" ng-click="removeCard(card._id)"><small><span class="glyphicon glyphicon-remove"></small> Remove</button>
 
           </td>
         </tr>

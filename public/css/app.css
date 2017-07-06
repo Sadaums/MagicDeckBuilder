@@ -1,5 +1,5 @@
 .deckCard{
-  max-width: 7em;
+  max-width: 8em;
 }
 .cardSelectCard{
   max-width: 13em;
@@ -9,4 +9,18 @@
 }*/
 .modal-content{
   max-width: 90em;
+}
+.primaryNav{
+  background-color: grey;
+}
+a{
+  color: white;
+}
+.pageTitle{
+  padding-top: 30px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  background-color: lightgrey;
+  border-collapse: collapse;
+  margin-top: 0;
 }

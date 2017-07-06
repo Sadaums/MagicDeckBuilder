@@ -1,51 +1,43 @@
 <!-- find cards on criteria -->
-<h1 class="center">Card Finder</h1>
+<h1 class="pageTitle">Card Finder</h1>
 <div ng-hide="showForm">
 
     <div class="container">
 
-      <form name='cardForm' class="">
-        <ul>
-          <li><button ng-click="showName = !showName">Name <span class="caret"></span></button>
-            <br>
-            <input placeholder="ex. Black Lotus, Shock, Negate, Dark Confidant, etc." ng-model="card.name" ng-show="showName">
-          </li>
-
-          <li><button ng-click="showColor = !showColor" disabled>Color <span class="caret"></span></button>
-            <br>
+      <form class="center-block" name='cardForm' class="">
+        <div class="form-group">
+          <button class="btn" ng-click="showName = !showName">Name <span class="caret"></span></button>
+          <input class="form-control" placeholder="ex. Black Lotus, Shock, Negate, Dark Confidant, etc." ng-model="card.name" ng-show="showName">
+        </div>
+        <div class="form-group">
+          <button class="btn" ng-click="showColor = !showColor" disabled>Color <span class="caret"></span></button>
             <label class="checkbox-inline" ng-repeat="color in colors" ng-show="showColor">
-              <input type="checkbox" id={{color}} ng-model="card.color" value={color}} disabled>{{color}}
+              <input class="form-control" type="checkbox" id={{color}} ng-model="card.color" value={color}} >{{color}}
             </label>
-          </li>
-
-          <li><button ng-click="showManaCost = !showManaCost" disabled>Converted Mana Cost <span class="caret"></span></button>
-            <br>
+        </div>
+        <div class="form-group">
+          <button class="btn" ng-click="showManaCost = !showManaCost" disabled>Converted Mana Cost <span class="caret"></span></button>
             <label class="checkbox-inline" ng-show="showManaCost" ng-repeat="cost in manaCost">
-              <input type="checkbox" id={{cost}} ng-model="card.cost" value={{cost}} disabled>{{cost}}
+              <input class="form-control" type="checkbox" id={{cost}} ng-model="card.cost" value={{cost}} >{{cost}}
             </label>
-          </li>
-
-          <li><button ng-click="showType = !showType" disabled>Type <span class="caret"></span></button>
-            <br>
+        </div>
+        <div class="form-group">
+          <button class="btn" ng-click="showType = !showType" disabled>Type <span class="caret"></span></button>
             <label class="checkbox-inline" ng-repeat="type in types" ng-show="showType">
-              <input type="checkbox" id={{type}} ng-model="card.type" value={{type}} disabled>{{type}}
+              <input class="form-control" type="checkbox" id={{type}} ng-model="card.type" value={{type}} >{{type}}
             </label>
-          </li>
-
-          <li><button ng-click="showSubtype = !showSubtype" disabled>Subtype <span class="caret"></span></button>
-            <br>
-            <input placeholder="ex. Equipment, Aura, Angel, etc." ng-model="card.subType" ng-show="showSubtype">
-          </li>
-
-          <li><button ng-click="showSet = !showSet" disabled>Set <span class="caret"></span></button>
-            <br>
+        </div>
+        <div class="form-group">
+          <button class="btn" ng-click="showSubtype = !showSubtype" >Subtype <span class="caret"></span></button>
+            <input class="form-control" placeholder="ex. Equipment, Aura, Angel, etc." ng-model="card.subType" ng-show="showSubtype">
+        </div>
+        <div class="form-group">
+          <button class="btn" ng-click="showSet = !showSet" disabled>Set <span class="caret"></span></button>
             <label class="checkbox-inline" ng-repeat="set in standard" ng-model="card.set" ng-show="showSet">
-              <input type="checkbox" id={{set}} value={{set}} disabled>{{set}}
-          </li>
+              <input class="form-control" type="checkbox" id={{set}} value={{set}} >{{set}}
+        </div>
 
-        </ul>
-
-        <button ng-click="getCards(card); showForm = !showForm">Find Cards</button>
+        <button class="btn btn-info" ng-click="getCards(card); showForm = !showForm" class="btn btn-primary">Find Cards <small><span class="glyphicon glyphicon-chevron-right"></small> </button>
 
       </form>
 
@@ -57,7 +49,8 @@
 
   <div class="container">
 
-    <button class="row center-block" ng-click="showForm = !showForm">Back to Card Select</button>
+    <button class="row center-block btn" ng-click="showForm = !showForm"> <small><span class="glyphicon glyphicon-chevron-left"></small> Back to Card Select</button>
+      <br>
     <table class="table table-hover">
       <tr>
         <th>Picture</th>
@@ -73,7 +66,7 @@
           </ul>
         </td>
         <td>
-          <button class="btn" ng-click="addToDeck(card)">Add to Deck!</button>
+          <button class="btn align-middle" ng-click="addToDeck(card)"><small><span class="glyphicon glyphicon-plus"></small> Add to Deck</button>
         </td>
       </tr>
 
