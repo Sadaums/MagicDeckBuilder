@@ -19,8 +19,40 @@ a{
 .pageTitle{
   padding-top: 30px;
   padding-bottom: 10px;
-  padding-left: 10px;
+  padding-left: 30px;
   background-color: lightgrey;
   border-collapse: collapse;
   margin-top: 0;
+}
+.btn-caution{
+  background-color: rgb(233, 200, 50);
+  box-shadow: -5px -5px 10px rgb(213, 180, 30) inset;
+  color: white;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+.btn-quantity{
+  width: 2em;
+  height: 2em;
+  text-align: center;
+  padding: 0;
+}
+.box{
+  border-width: .1em;
+  border-radius: .5em;
+  border-color: black;
+  border-style: solid;
+  padding: 1em 1em 0 1em;
+  margin-bottom: 1.5em;
+  margin-top: 1em;
 }

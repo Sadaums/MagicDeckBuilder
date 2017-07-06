@@ -4,11 +4,11 @@
   <div class="container">
   <div class="container">
     <div class="row">
-      <button class="row center-block btn btn-info pull-left" ng-click="goToFinder()"><small><span class="glyphicon glyphicon-chevron-left"></small> Add New Card</button>
-      <button class="row center-block btn btn-danger pull-right" ng-click="showMechanicTable = !showMechanicTable">Mechanics Manager <small><span class="glyphicon glyphicon-chevron-down"></small></button>
+      <button class="row center-block btn-caution pull-left" ng-click="goToFinder()"><small><span class="glyphicon glyphicon-chevron-left"></small> Add New Card</button>
+      <button class="row center-block btn-caution pull-right" ng-click="showMechanicTable = !showMechanicTable">Mechanics Manager <small><span class="glyphicon glyphicon-chevron-down"></small></button>
     </div>
 
-    <div ng-show="showMechanicTable" class="row">
+    <div ng-show="showMechanicTable" class="row box">
       <table class="table">
         <thead>
           <tr>
@@ -34,7 +34,7 @@
           </td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <td><button class="btn btn-success pull-right" ng-click="addMechanic(mechanic)"><small><span class="glyphicon glyphicon-plus"></small> Add Mechanic</button></td>
+          <td><button class="btn btn-warning pull-right" ng-click="addMechanic(mechanic)"><small><span class="glyphicon glyphicon-plus"></small> Add Mechanic</button></td>
 
         </tr>
       </table>
@@ -107,9 +107,9 @@
 
           </td>
           <td>
-            <h3 class="<center-block></center-block>"><b>x {{card.quantity}}</b></h3>
-            <button class="btn btn-danger" ng-click="increaseQuantity(card)"><small><span class="glyphicon glyphicon-plus"></small></button>
-            <button class="btn btn-danger" ng-click="decreaseQuantity(card)"><small><span class="glyphicon glyphicon-minus"></small></button></td>
+            <h3 class="text-left"><b>x {{card.quantity}}</b></h3>
+            <button class="btn btn-warning btn-quantity" ng-click="increaseQuantity(card)"><small><span class="glyphicon glyphicon-plus"></small></button>
+            <button class="btn btn-warning btn-quantity" ng-click="decreaseQuantity(card)"><small><span class="glyphicon glyphicon-minus"></small></button></td>
           <td class='text-center'>
             {{card.manaCost}} {{card.type}}
             <hr>

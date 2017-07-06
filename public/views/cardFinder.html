@@ -4,7 +4,7 @@
 
     <div class="container">
 
-      <form class="center-block" name='cardForm' class="">
+      <form class="center-block box" name='cardForm' class="">
         <div class="form-group">
           <button class="btn" ng-click="showName = !showName">Name <span class="caret"></span></button>
           <input class="form-control" placeholder="ex. Black Lotus, Shock, Negate, Dark Confidant, etc." ng-model="card.name" ng-show="showName">
@@ -37,9 +37,11 @@
               <input class="form-control" type="checkbox" id={{set}} value={{set}} >{{set}}
         </div>
 
-        <button class="btn btn-info" ng-click="getCards(card); showForm = !showForm" class="btn btn-primary">Find Cards <small><span class="glyphicon glyphicon-chevron-right"></small> </button>
+
 
       </form>
+
+      <button class="btn-caution row center-block" ng-click="getCards(card); showForm = !showForm" class="btn btn-primary">Find Cards <small><span class="glyphicon glyphicon-chevron-right"></small> </button>
 
     </div>
 
@@ -49,7 +51,7 @@
 
   <div class="container">
 
-    <button class="row center-block btn" ng-click="showForm = !showForm"> <small><span class="glyphicon glyphicon-chevron-left"></small> Back to Card Select</button>
+    <button class="row center-block btn-caution" ng-click="showForm = !showForm"> <small><span class="glyphicon glyphicon-chevron-left"></small> Back to Card Select</button>
       <br>
     <table class="table table-hover">
       <tr>
@@ -66,7 +68,7 @@
           </ul>
         </td>
         <td>
-          <button class="btn align-middle" ng-click="addToDeck(card)"><small><span class="glyphicon glyphicon-plus"></small> Add to Deck</button>
+          <button class="btn btn-warning align-middle" ng-click="addToDeck(card)"><small><span class="glyphicon glyphicon-plus"></small> Add to Deck</button>
         </td>
       </tr>
 
