@@ -290,14 +290,15 @@ myApp.controller('deckController', ['$scope', '$http', '$location', function($sc
         let editCard = card;
         if (editCard.quantity <= 1) {
           console.log(editCard);
-          $http.delete('/deck/' + editCard.id)
+          $http.delete('/deck/' + editCard._id)
+          .then(refresh());
         }
         else {
           editCard.quantity--;
           console.log(editCard);
           $http.put('/deck/' + editCard._id, editCard)
+          .then(refresh())
         }
-        refresh()
     };
 
     //
